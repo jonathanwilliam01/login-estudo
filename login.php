@@ -24,7 +24,7 @@ if (isset($_POST['login'])) {
           echo "Senha incorreta.";
       }
   } else {
-      echo "Usuário não encontrado.";
+      ?> <script> window.alert("Usuário não encontrado.") </script> <?php ;
   }
 
 }
