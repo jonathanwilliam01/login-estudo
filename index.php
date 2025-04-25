@@ -15,7 +15,7 @@ if (!isset($_SESSION['usuario'])) {
 
 if(isset($_POST['logoff'])){
   session_destroy();
-  header("Location: aviso_login.php");
+  header("Location: login.php");
 }
 
 ?>

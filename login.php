@@ -1,10 +1,34 @@
 <?php
 
 include_once('conexao.php');
+session_start();
 
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
   $email = $_POST['email'];
   $senha = $_POST['senha'];
+
+  $stmt = $mysqli->prepare("SELECT id, nome, senha FROM usuarios WHERE email = '$email'");
+  $stmt->execute();
+  $resultado = $stmt->get_result();
+
+  if ($resultado->num_rows === 1) {
+      $usuario = $resultado->fetch_assoc();
+
+      if (password_verify($senha, $usuario['senha'])) {
+          $_SESSION['usuario'] = [
+              'id' => $usuario['id'],
+              'nome' => $usuario['nome']
+          ];
+          header("Location: index.php");
+          exit;
+      } else {
+          echo "Senha incorreta.";
+      }
+  } else {
+      echo "Usuário não encontrado.";
+  }
+
+  $stmt->close();
 }
 
 ?>
