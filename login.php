@@ -7,12 +7,11 @@ if (isset($_POST['login'])) {
   $email = $_POST['email'];
   $senha = $_POST['senha'];
 
-  $stmt = $mysqli->prepare("SELECT id, nome, senha FROM usuarios WHERE email = '$email'");
-  $stmt->execute();
-  $resultado = $stmt->get_result();
+  $sql = "SELECT id, nome, senha FROM usuarios WHERE email = '$email'";
+  $sql = mysqli_query($mysqli,$sql);
 
-  if ($resultado->num_rows === 1) {
-      $usuario = $resultado->fetch_assoc();
+  if ($sql->num_rows === 1) {
+      $usuario = $sql->fetch_assoc();
 
       if (password_verify($senha, $usuario['senha'])) {
           $_SESSION['usuario'] = [
@@ -28,7 +27,6 @@ if (isset($_POST['login'])) {
       echo "Usuário não encontrado.";
   }
 
-  $stmt->close();
 }
 
 ?>
