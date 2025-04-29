@@ -3,32 +3,6 @@
 include_once('conexao.php');
 session_start();
 
-if (isset($_POST['login'])) {
-  $email = $_POST['email'];
-  $senha = $_POST['senha'];
-
-  $sql = "SELECT id, nome, senha FROM usuarios WHERE email = '$email'";
-  $sql = mysqli_query($mysqli,$sql);
-
-  if ($sql->num_rows === 1) {
-      $usuario = $sql->fetch_assoc();
-
-      if (password_verify($senha, $usuario['senha'])) {
-          $_SESSION['usuario'] = [
-              'id' => $usuario['id'],
-              'nome' => $usuario['nome']
-          ];
-          header("Location: index.php");
-          exit;
-      } else {
-          echo "Senha incorreta.";
-      }
-  } else {
-      ?> <script> window.alert("Usuário não encontrado.") </script> <?php ;
-  }
-
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -53,13 +27,42 @@ if (isset($_POST['login'])) {
       <div class="inputs">
         <label for="senha">Senha</label>
         <input type="password" id="senha" name="senha" required>
+          
+          <div class="login-link">
+            <a href ="esqueci_senha.php"> Esqueci minha senha. </a>
+          </div>
       </div>
+
+      <?php
+         if (isset($_POST['login'])) {
+            $email = $_POST['email'];
+            $senha = $_POST['senha'];
+         
+            $sql = "SELECT id, nome, senha FROM usuarios WHERE email = '$email'";
+            $sql = mysqli_query($mysqli,$sql);
+         
+          if ($sql->num_rows === 1) {
+              $usuario = $sql->fetch_assoc();
+         
+              if (password_verify($senha, $usuario['senha'])) {
+                  $_SESSION['usuario'] = [
+                      'id' => $usuario['id'],
+                      'nome' => $usuario['nome']
+                  ];
+                  header("Location: index.php");
+                  exit;
+              } else {
+                echo  "Senha incorreta.";}
+              } else {
+                echo "Usuarios não encontrado.";}
+          }
+      ?>
 
       <button class="btn" type="submit" name="login">Realizar login</button>
     </form>
 
     <div class="login-link">
-      Não possui uma conta? <a href="cadastro.php">Cadastrar-se</a>
+      Não possui uma conta? <a href="cadastro.php">Cadastre-se</a>
     </div>
   </div>
 
