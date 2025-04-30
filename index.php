@@ -18,6 +18,11 @@ if(isset($_POST['logoff'])){
   header("Location: login.php");
 }
 
+if(isset($_POST['cadastrados'])){
+  session_destroy();
+  header("Location: cadastrados.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +40,8 @@ if(isset($_POST['logoff'])){
 
     <form method="post">
       <div class="login-link">
-      <a href="login.php"> <button class="btn" name="logoff">  Fazer logoff </button> </a>
+      <a href="login.php"> <button class="botn" name="cadastrados"> Usarios Cadastrados </button> </a>
+      <a href="login.php"> <button class="botn" name="logoff">  Fazer logoff </button> </a>
       </div>
     </form>
 

@@ -11,7 +11,7 @@
     <h2>Você não fez o login, clique no botão abaixo para realizar</h2>
 
     <div class="login-link">
-    <a href="login.php"> <button class="btn">  Fazer login </button> </a>
+    <a href="login.php"> <button class="botn">  Fazer login </button> </a>
     </div>
 
   </div>
