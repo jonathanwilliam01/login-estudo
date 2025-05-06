@@ -38,7 +38,7 @@ session_start();
             $email = $_POST['email'];
             $senha = $_POST['senha'];
          
-            $sql = "SELECT id, nome, senha FROM usuarios WHERE email = '$email'";
+            $sql = "SELECT id, nome, senha, nivel FROM usuarios WHERE email = '$email'";
             $sql = mysqli_query($mysqli,$sql);
          
           if ($sql->num_rows === 1) {
@@ -47,7 +47,8 @@ session_start();
               if (password_verify($senha, $usuario['senha'])) {
                   $_SESSION['usuario'] = [
                       'id' => $usuario['id'],
-                      'nome' => $usuario['nome']
+                      'nome' => $usuario['nome'],
+                      'nivel' => $usuario['nivel']
                   ];
                   header("Location: index.php");
                   exit;

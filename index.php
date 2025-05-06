@@ -8,6 +8,10 @@ if(isset($_SESSION['usuario'])){
   $nome = $_SESSION['usuario']['nome'];
 }
 
+if(isset($_SESSION['usuario'])){
+  $nivel = $_SESSION['usuario']['nivel'];
+}
+
 if (!isset($_SESSION['usuario'])) {
   header("Location: aviso_login.php");
   exit;
@@ -19,7 +23,6 @@ if(isset($_POST['logoff'])){
 }
 
 if(isset($_POST['cadastrados'])){
-  session_destroy();
   header("Location: cadastrados.php");
 }
 
@@ -40,8 +43,13 @@ if(isset($_POST['cadastrados'])){
 
     <form method="post">
       <div class="login-link">
-      <a href="login.php"> <button class="botn" name="cadastrados"> Usarios Cadastrados </button> </a>
+
+      <?php if($nivel == 1){
+        echo '<a href="login.php"> <button class="botn" name="cadastrados"> Usarios Cadastrados </button> </a>';
+      }?>
+
       <a href="login.php"> <button class="botn" name="logoff">  Fazer logoff </button> </a>
+
       </div>
     </form>
 
