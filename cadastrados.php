@@ -6,6 +6,12 @@ session_start();
 
 if(isset($_SESSION['usuario'])){
   $nome = $_SESSION['usuario']['nome'];
+  $nivel = $_SESSION['usuario']['nivel'];
+}
+
+if($nivel != 1){
+  session_destroy();
+  header("Location: aviso_login.php");
 }
 
 if (!isset($_SESSION['usuario'])) {
@@ -17,15 +23,6 @@ if(isset($_POST['voltar'])){
   header("Location: index.php");
 }
 
-if(isset($_POST['salvar'])){
-  $nome = $_POST['nome'];
-  $email = $_POST['email'];
-  $id = $_POST['id'];
-
-  $update="update usuarios set nome = '$nome', email = '$email' where id = $id";
-  $sqlupdate = mysqli_query($mysqli,$update);
-  header("location: cadastrados.php");
-}
 ?>
 
 <!DOCTYPE html>
@@ -73,10 +70,10 @@ if(isset($_POST['salvar'])){
                 ?>
             <tbody>
               <tr>
-                <td><input type="text" value=<?php echo $usuarios['id'];?> name="id" style="width: 20px; background-color: #1e1e1e;" readonly></td>
-                <td><input type="text" value=<?php echo $usuarios['nome'];?> name="nome"> </td>
-                <td><input type="text" value=<?php echo $usuarios['email'];?> name="email" style="width: 200px;"></td>
-                <td><input type="text" value=<?php echo $usuarios['nivel'];?> name="nivel" style="width: 100px;"></td>
+                <td><input type="text" value="<?php echo $usuarios['id'];?>"name="id" style="width: 20px; background-color: #1e1e1e;" readonly></td>
+                <td><input type="text" value="<?php echo $usuarios['nome'];?>" name="nome" style="width: 200px;"> </td>
+                <td><input type="text" value="<?php echo $usuarios['email'];?>" name="email" style="width: 200px;"></td>
+                <td><input type="text" value="<?php echo $usuarios['nivel'];?>" name="nivel" style="width: 100px;"></td>
                 <td></td>
               </tr>
             </tbody>
@@ -84,9 +81,21 @@ if(isset($_POST['salvar'])){
                   };
                 ?>
         </table>
+        
 
         <div class="login-link">
-          <button class="botn" name="salvar" type="submit">  Salvar </button> 
+          <button type="submit" class="botn" name="salvar">  Salvar </button> 
+            <?php
+              if(isset($_POST['salvar'])){
+                $nome = $_POST['nome'];
+                $email = $_POST['email'];
+                $id = $_POST['id'];
+              
+                $update="update usuarios set nome = '$nome', email = '$email' where id = $id";
+                $sqlupdate = mysqli_query($mysqli,$update);
+                header("location: cadastrados.php");
+              }
+            ?>
           <a href="index.php"> <button class="botn" name="voltar">  Voltar a tela inicial </button> </a>
         </div>
     </form>
