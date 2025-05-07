@@ -31,6 +31,7 @@ if(isset($_POST['voltar'])){
   <meta charset="UTF-8">
   <title>Usuarios cadastrados</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 </head>
 <body>
 
@@ -74,7 +75,7 @@ if(isset($_POST['voltar'])){
                 <td><input type="text" value="<?php echo $usuarios['nome'];?>" name="nome" style="width: 200px;"> </td>
                 <td><input type="text" value="<?php echo $usuarios['email'];?>" name="email" style="width: 200px;"></td>
                 <td><input type="text" value="<?php echo $usuarios['nivel'];?>" name="nivel" style="width: 100px;"></td>
-                <td></td>
+                <td><button type="submit" name="delete" style="cursor:pointer; border: none; background-color: #1e1e1e"><span class="material-icons" style="font-size: 3ch; color:red; background-color: #1e1e1e; border: none">delete</span></button></td>
               </tr>
             </tbody>
                 <?php
@@ -86,6 +87,14 @@ if(isset($_POST['voltar'])){
         <div class="login-link">
           <button type="submit" class="botn" name="salvar">  Salvar </button> 
             <?php
+              if(isset($_POST['delete'])){
+                $id = $_POST['id'];
+
+                $delete="delete from usuarios where id = $id";
+                $sqldelete = mysqli_query($mysqli,$delete);
+                header("location: cadastrados.php");
+              }
+
               if(isset($_POST['salvar'])){
                 $nome = $_POST['nome'];
                 $email = $_POST['email'];

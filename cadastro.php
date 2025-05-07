@@ -18,7 +18,7 @@ if(isset($_POST['cadastrar'])){
   if ($sql_cadastrar) {
     $id = mysqli_insert_id($mysqli); 
 
-    $_SESSION['usuario'] = ['id' => $id, 'nome' => $nome, 'nivel' => 1];
+    $_SESSION['usuario'] = ['id' => $id, 'nome' => $nome, 'nivel' => 2];
 
     header("location:index.php");
     exit;
